@@ -1,3 +1,5 @@
+package main.java;
+
 import java.io.IOException;
 
 public class ATM {
@@ -9,6 +11,6 @@ public class ATM {
 	}
 
 	public static void introduction() {
-		System.out.println("Welcome to the ATM Project!");
+		System.out.println("Welcome to the main.java.ATM Project!");
 	}
 }

@@ -1,3 +1,8 @@
+package main.java;
+
+import main.java.Account;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -45,8 +50,8 @@ public class OptionMenu {
 		while (!end) {
 			try {
 				System.out.println("\nSelect the account you want to access: ");
-				System.out.println(" Type 1 - Checking Account");
-				System.out.println(" Type 2 - Savings Account");
+				System.out.println(" Type 1 - Checking main.java.Account");
+				System.out.println(" Type 2 - Savings main.java.Account");
 				System.out.println(" Type 3 - Exit");
 				System.out.print("\nChoice: ");
 
@@ -76,7 +81,7 @@ public class OptionMenu {
 		boolean end = false;
 		while (!end) {
 			try {
-				System.out.println("\nChecking Account: ");
+				System.out.println("\nChecking main.java.Account: ");
 				System.out.println(" Type 1 - View Balance");
 				System.out.println(" Type 2 - Withdraw Funds");
 				System.out.println(" Type 3 - Deposit Funds");
@@ -88,7 +93,7 @@ public class OptionMenu {
 
 				switch (selection) {
 				case 1:
-					System.out.println("\nChecking Account Balance: " + moneyFormat.format(acc.getCheckingBalance()));
+					System.out.println("\nChecking main.java.Account Balance: " + moneyFormat.format(acc.getCheckingBalance()));
 					break;
 				case 2:
 					acc.getCheckingWithdrawInput();
@@ -117,7 +122,7 @@ public class OptionMenu {
 		boolean end = false;
 		while (!end) {
 			try {
-				System.out.println("\nSavings Account: ");
+				System.out.println("\nSavings main.java.Account: ");
 				System.out.println(" Type 1 - View Balance");
 				System.out.println(" Type 2 - Withdraw Funds");
 				System.out.println(" Type 3 - Deposit Funds");
@@ -127,10 +132,10 @@ public class OptionMenu {
 				int selection = menuInput.nextInt();
 				switch (selection) {
 				case 1:
-					System.out.println("\nSavings Account Balance: " + moneyFormat.format(acc.getSavingBalance()));
+					System.out.println("\nSavings main.java.Account Balance: " + moneyFormat.format(acc.getSavingBalance()));
 					break;
 				case 2:
-					acc.getsavingWithdrawInput();
+					acc.getSavingWithdrawInput();
 					break;
 				case 3:
 					acc.getSavingDepositInput();
@@ -176,6 +181,7 @@ public class OptionMenu {
 		System.out.println("\nEnter PIN to be registered");
 		int pin = menuInput.nextInt();
 		data.put(cst_no, new Account(cst_no, pin));
+		addAccountToFile(data.get(cst_no));
 		System.out.println("\nYour new account has been successfuly registered!");
 		System.out.println("\nRedirecting to login.............");
 		getLogin();
@@ -188,7 +194,7 @@ public class OptionMenu {
 		while (!end) {
 			try {
 				System.out.println("\n Type 1 - Login");
-				System.out.println(" Type 2 - Create Account");
+				System.out.println(" Type 2 - Create main.java.Account");
 				System.out.print("\nChoice: ");
 				int choice = menuInput.nextInt();
 				switch (choice) {
@@ -208,8 +214,39 @@ public class OptionMenu {
 				menuInput.next();
 			}
 		}
-		System.out.println("\nThank You for using this ATM.\n");
+		System.out.println("\nThank You for using this main.java.ATM.\n");
 		menuInput.close();
 		System.exit(0);
+	}
+	public void addAccountToFile(Account acc){
+		OptionMenu option = new OptionMenu();
+		try{
+			FileWriter accountWriter = new FileWriter("accounts.txt", true);
+			accountWriter.write(convertAccountToString(acc.);
+			accountWriter.close();
+			System.out.println("Account has been added to system.");
+		} catch(IOException e){
+			System.out.println("That account already exists.");
+		}
+	}
+
+	public void createTransactionFile(){
+
+	}
+
+	public void updateTransactionFile(){
+
+	}
+	public String convertAccountToString(Integer ){
+		StringBuilder builder = new StringBuilder();
+		builder.append(data.get(acc).getCustomerNumber());
+		builder.append(",");
+		builder.append(data.get(acc).getPinNumber());
+		builder.append(",");
+		builder.append(data.get(acc).getCheckingBalance());
+		builder.append(",");
+		builder.append(data.get(acc).getSavingBalance());
+
+		return builder.toString();
 	}
 }

@@ -1,4 +1,9 @@
+package main.java;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -87,12 +92,12 @@ public class Account {
 		boolean end = false;
 		while (!end) {
 			try {
-				System.out.println("\nCurrent Checking Account Balance: " + moneyFormat.format(checkingBalance));
-				System.out.print("\nAmount you want to withdraw from Checking Account: ");
+				System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
+				System.out.print("\nAmount you want to withdraw from Checking main.java.Account: ");
 				double amount = input.nextDouble();
 				if ((checkingBalance - amount) >= 0 && amount >= 0) {
 					calcCheckingWithdraw(amount);
-					System.out.println("\nCurrent Checking Account Balance: " + moneyFormat.format(checkingBalance));
+					System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot be Negative.");
@@ -104,16 +109,16 @@ public class Account {
 		}
 	}
 
-	public void getsavingWithdrawInput() {
+	public void getSavingWithdrawInput() {
 		boolean end = false;
 		while (!end) {
 			try {
-				System.out.println("\nCurrent Savings Account Balance: " + moneyFormat.format(savingBalance));
-				System.out.print("\nAmount you want to withdraw from Savings Account: ");
+				System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
+				System.out.print("\nAmount you want to withdraw from Savings main.java.Account: ");
 				double amount = input.nextDouble();
 				if ((savingBalance - amount) >= 0 && amount >= 0) {
 					calcSavingWithdraw(amount);
-					System.out.println("\nCurrent Savings Account Balance: " + moneyFormat.format(savingBalance));
+					System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot Be Negative.");
@@ -129,12 +134,12 @@ public class Account {
 		boolean end = false;
 		while (!end) {
 			try {
-				System.out.println("\nCurrent Checking Account Balance: " + moneyFormat.format(checkingBalance));
-				System.out.print("\nAmount you want to deposit from Checking Account: ");
+				System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
+				System.out.print("\nAmount you want to deposit from Checking main.java.Account: ");
 				double amount = input.nextDouble();
 				if ((checkingBalance + amount) >= 0 && amount >= 0) {
 					calcCheckingDeposit(amount);
-					System.out.println("\nCurrent Checking Account Balance: " + moneyFormat.format(checkingBalance));
+					System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot Be Negative.");
@@ -150,13 +155,13 @@ public class Account {
 		boolean end = false;
 		while (!end) {
 			try {
-				System.out.println("\nCurrent Savings Account Balance: " + moneyFormat.format(savingBalance));
-				System.out.print("\nAmount you want to deposit into your Savings Account: ");
+				System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
+				System.out.print("\nAmount you want to deposit into your Savings main.java.Account: ");
 				double amount = input.nextDouble();
 
 				if ((savingBalance + amount) >= 0 && amount >= 0) {
 					calcSavingDeposit(amount);
-					System.out.println("\nCurrent Savings Account Balance: " + moneyFormat.format(savingBalance));
+					System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot Be Negative.");
@@ -180,14 +185,14 @@ public class Account {
 					int choice = input.nextInt();
 					switch (choice) {
 					case 1:
-						System.out.println("\nCurrent Checking Account Balance: " + moneyFormat.format(checkingBalance));
-						System.out.print("\nAmount you want to deposit into your Savings Account: ");
+						System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
+						System.out.print("\nAmount you want to deposit into your Savings main.java.Account: ");
 						double amount = input.nextDouble();
 						if ((savingBalance + amount) >= 0 && (checkingBalance - amount) >= 0 && amount >= 0) {
 							calcCheckTransfer(amount);
-							System.out.println("\nCurrent Savings Account Balance: " + moneyFormat.format(savingBalance));
+							System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
 							System.out.println(
-									"\nCurrent Checking Account Balance: " + moneyFormat.format(checkingBalance));
+									"\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
 							end = true;
 						} else {
 							System.out.println("\nBalance Cannot Be Negative.");
@@ -207,7 +212,7 @@ public class Account {
 					int choice = input.nextInt();
 					switch (choice) {
 					case 1:
-						System.out.println("\nCurrent Savings Account Balance: " + moneyFormat.format(savingBalance));
+						System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
 						System.out.print("\nAmount you want to deposit into your savings account: ");
 						double amount = input.nextDouble();
 						if ((checkingBalance + amount) >= 0 && (savingBalance - amount) >= 0 && amount >= 0) {
@@ -232,4 +237,6 @@ public class Account {
 			}
 		}
 	}
+
+
 }
