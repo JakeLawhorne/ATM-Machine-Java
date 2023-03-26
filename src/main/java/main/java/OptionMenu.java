@@ -2,16 +2,17 @@ package main.java;
 
 import main.java.Account;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class OptionMenu {
+	public SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
+	public Date date = new Date();
+
 	Scanner menuInput = new Scanner(System.in);
 	DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.00");
 	HashMap<Integer, Account> data = new HashMap<Integer, Account>();
@@ -52,7 +53,8 @@ public class OptionMenu {
 				System.out.println("\nSelect the account you want to access: ");
 				System.out.println(" Type 1 - Checking main.java.Account");
 				System.out.println(" Type 2 - Savings main.java.Account");
-				System.out.println(" Type 3 - Exit");
+				System.out.println(" Type 3 - Show all account balances");
+				System.out.println(" Type 4 - Exit");
 				System.out.print("\nChoice: ");
 
 				int selection = menuInput.nextInt();
@@ -65,6 +67,12 @@ public class OptionMenu {
 					getSaving(acc);
 					break;
 				case 3:
+					System.out.println("\nChecking main.java.Account Balance: "
+							+ moneyFormat.format(acc.getCheckingBalance()));
+					System.out.println("\nSavings main.java.Account Balance: "
+							+ moneyFormat.format(acc.getSavingBalance()));
+					break;
+				case 4:
 					end = true;
 					break;
 				default:
@@ -181,7 +189,7 @@ public class OptionMenu {
 		System.out.println("\nEnter PIN to be registered");
 		int pin = menuInput.nextInt();
 		data.put(cst_no, new Account(cst_no, pin));
-		addAccountToFile(data.get(cst_no));
+		saveAllAccounts();
 		System.out.println("\nYour new account has been successfuly registered!");
 		System.out.println("\nRedirecting to login.............");
 		getLogin();
@@ -216,37 +224,40 @@ public class OptionMenu {
 		}
 		System.out.println("\nThank You for using this main.java.ATM.\n");
 		menuInput.close();
+		saveAllAccounts();
 		System.exit(0);
 	}
-	public void addAccountToFile(Account acc){
-		OptionMenu option = new OptionMenu();
+	public boolean saveAllAccounts(){
+		BufferedWriter bufferedWriter;
 		try{
-			FileWriter accountWriter = new FileWriter("accounts.txt", true);
-			accountWriter.write(convertAccountToString(acc.);
-			accountWriter.close();
-			System.out.println("Account has been added to system.");
-		} catch(IOException e){
-			System.out.println("That account already exists.");
+			bufferedWriter = new BufferedWriter(new FileWriter("accounts.txt"));
+			for(Account account : data.values()){
+				bufferedWriter.write(account.getCustomerNumber()+","+account.getPinNumber()+
+						","+account.getCheckingBalance()+","+ account.getSavingBalance());
+				bufferedWriter.newLine();
+			}
+			bufferedWriter.close();
+			return true;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	public void createTransactionFile(){
-
+	public boolean getAllAccounts() {
+		BufferedReader bufferedReader;
+		try{
+			bufferedReader = new BufferedReader(new FileReader("accounts.txt"));
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				String[] items = line.split(",");
+				Account account = new Account(Integer.parseInt(items[0]), Integer.parseInt(items[1]) , Double.parseDouble(items[2]), Double.parseDouble(items[3]));
+				data.put(Integer.parseInt(items[0]), account);
+			}
+			bufferedReader.close();
+			return true;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	public void updateTransactionFile(){
-
-	}
-	public String convertAccountToString(Integer ){
-		StringBuilder builder = new StringBuilder();
-		builder.append(data.get(acc).getCustomerNumber());
-		builder.append(",");
-		builder.append(data.get(acc).getPinNumber());
-		builder.append(",");
-		builder.append(data.get(acc).getCheckingBalance());
-		builder.append(",");
-		builder.append(data.get(acc).getSavingBalance());
-
-		return builder.toString();
-	}
 }
