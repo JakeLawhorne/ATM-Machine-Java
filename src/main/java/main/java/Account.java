@@ -3,6 +3,7 @@ package main.java;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -13,6 +14,12 @@ public class Account {
 	private int pinNumber;
 	private double checkingBalance = 0;
 	private double savingBalance = 0;
+
+	public ArrayList<String> getTransactions() {
+		return transactions;
+	}
+
+	private ArrayList<String> transactions;
 
 	Scanner input = new Scanner(System.in);
 	DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.00");
@@ -98,6 +105,7 @@ public class Account {
 				if ((checkingBalance - amount) >= 0 && amount >= 0) {
 					calcCheckingWithdraw(amount);
 					System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
+					this.transactions.add(amount + " was withdrawn from your checking account.");
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot be Negative.");
@@ -119,6 +127,8 @@ public class Account {
 				if ((savingBalance - amount) >= 0 && amount >= 0) {
 					calcSavingWithdraw(amount);
 					System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
+					this.transactions.add(amount + " was withdrawn from your savings account.");
+
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot Be Negative.");
@@ -140,6 +150,8 @@ public class Account {
 				if ((checkingBalance + amount) >= 0 && amount >= 0) {
 					calcCheckingDeposit(amount);
 					System.out.println("\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
+					this.transactions.add(amount + " was deposited into your checking account. ");
+
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot Be Negative.");
@@ -162,6 +174,8 @@ public class Account {
 				if ((savingBalance + amount) >= 0 && amount >= 0) {
 					calcSavingDeposit(amount);
 					System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
+					this.transactions.add(amount + " was deposited into your savings account. ");
+
 					end = true;
 				} else {
 					System.out.println("\nBalance Cannot Be Negative.");
@@ -193,6 +207,8 @@ public class Account {
 							System.out.println("\nCurrent Savings main.java.Account Balance: " + moneyFormat.format(savingBalance));
 							System.out.println(
 									"\nCurrent Checking main.java.Account Balance: " + moneyFormat.format(checkingBalance));
+							this.transactions.add(amount + " was deposited into your savings account from your checking account. ");
+
 							end = true;
 						} else {
 							System.out.println("\nBalance Cannot Be Negative.");
@@ -219,6 +235,8 @@ public class Account {
 							calcSavingTransfer(amount);
 							System.out.println("\nCurrent checking account balance: " + moneyFormat.format(checkingBalance));
 							System.out.println("\nCurrent savings account balance: " + moneyFormat.format(savingBalance));
+							this.transactions.add(amount + " was deposited into your checking account from your savings account. ");
+
 							end = true;
 						} else {
 							System.out.println("\nBalance Cannot Be Negative.");

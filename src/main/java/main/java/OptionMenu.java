@@ -15,7 +15,7 @@ public class OptionMenu {
 
 	Scanner menuInput = new Scanner(System.in);
 	DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.00");
-	HashMap<Integer, Account> data = new HashMap<Integer, Account>();
+	HashMap<Integer, Account> data = new HashMap<>();
 
 	public void getLogin() throws IOException {
 		boolean end = false;
@@ -54,7 +54,8 @@ public class OptionMenu {
 				System.out.println(" Type 1 - Checking main.java.Account");
 				System.out.println(" Type 2 - Savings main.java.Account");
 				System.out.println(" Type 3 - Show all account balances");
-				System.out.println(" Type 4 - Exit");
+				System.out.println(" Type 4 - Show Transaction History");
+				System.out.println(" Type 5 - Exit");
 				System.out.print("\nChoice: ");
 
 				int selection = menuInput.nextInt();
@@ -73,6 +74,9 @@ public class OptionMenu {
 							+ moneyFormat.format(acc.getSavingBalance()));
 					break;
 				case 4:
+					System.out.println("\nRecent transactions: " + getTransactionHistory());
+					break;
+				case 5:
 					end = true;
 					break;
 				default:
@@ -225,6 +229,7 @@ public class OptionMenu {
 		System.out.println("\nThank You for using this main.java.ATM.\n");
 		menuInput.close();
 		saveAllAccounts();
+		saveTransactionHistory();
 		System.exit(0);
 	}
 	public boolean saveAllAccounts(){
@@ -259,5 +264,35 @@ public class OptionMenu {
 			throw new RuntimeException(e);
 		}
 	}
+	public boolean saveTransactionHistory(){
+		BufferedWriter bufferedWriter;
+		try{
+			bufferedWriter = new BufferedWriter(new FileWriter("transactions.txt"));
+			for(Account account : data.values()){
+				for(int i = 0; i < account.getTransactions().size(); i++){
+					bufferedWriter.write(account.getTransactions().get(i));
+				}
+				bufferedWriter.newLine();
+			}
+			bufferedWriter.close();
+			return true;
+		} catch(IOException e){
+			throw new RuntimeException(e);
+		}
+	}
 
+	public boolean getTransactionHistory(){
+		BufferedReader bufferedReader;
+		try{
+			bufferedReader = new BufferedReader(new FileReader("transactions.txt"));
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				bufferedReader.readLine();
+			}
+			bufferedReader.close();
+			return true;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
